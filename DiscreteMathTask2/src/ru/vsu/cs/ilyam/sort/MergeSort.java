@@ -1,51 +1,52 @@
 package ru.vsu.cs.ilyam.sort;
 
-import ru.vsu.cs.ilyam.result.MergeResult;
-import ru.vsu.cs.ilyam.result.SwapAndCompareCountResult;
-
 public class MergeSort {
 
-    public SwapAndCompareCountResult sort(int[] a, int arrSize) {
-        int countSwap = 0;
-        int countComparison = 0;
-
-            if (arrSize < 2) {
-                return null;
-            }
-            int mid = arrSize / 2;
-            int[] l = new int[mid];
-            int[] r = new int[arrSize - mid];
-
-            for (int i = 0; i < mid; i++) {
-                l[i] = a[i];
-            }
-            for (int i = mid; i < arrSize; i++) {
-                r[i - mid] = a[i];
-            }
-
-            sort(l, mid);
-
-            sort(r, arrSize - mid);
+    private int countComparison = 0;
+    private int swapCount = 0;
 
 
-            MergeResult res = merge(a, l, r, mid, arrSize - mid);
-            countComparison = res.getCountComparison();
-            //countSwap = res.getCountSwap();
-        return new SwapAndCompareCountResult(a, countSwap, countComparison);
+    public int[] sort(int[] a, int arrSize) {
+        if (arrSize < 2) {
+            return a;
+        }
+        int mid = arrSize / 2;
+        int[] l = new int[mid];
+        int[] r = new int[arrSize - mid];
+
+        for (int i = 0; i < mid; i++) {
+            l[i] = a[i];
+        }
+        for (int i = mid; i < arrSize; i++) {
+            r[i - mid] = a[i];
+        }
+
+        sort(l, mid);
+
+        sort(r, arrSize - mid);
+
+
+        merge(a, l, r, mid, arrSize - mid);
+        return a;
     }
 
-    public MergeResult merge(
+    public int getCountComparison() {
+        return countComparison;
+    }
+
+    public int getSwapCount() {
+        return swapCount;
+    }
+
+    public void merge(
             int[] a, int[] l, int[] r, int left, int right) {
-        int countSwap = 0;
-        int countComparison = 0;
 
         int i = 0, j = 0, k = 0;
         while (i < left && j < right) {
-            countComparison++;
+            this.countComparison++;
             if (l[i] <= r[j]) {
                 a[k++] = l[i++];
-            }
-            else {
+            } else {
                 a[k++] = r[j++];
             }
         }
@@ -55,8 +56,6 @@ public class MergeSort {
         while (j < right) {
             a[k++] = r[j++];
         }
-        return new MergeResult(countSwap, countComparison);
+        this.swapCount++;
     }
-
-
 }

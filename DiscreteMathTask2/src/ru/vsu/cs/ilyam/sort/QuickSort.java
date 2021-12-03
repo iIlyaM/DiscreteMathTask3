@@ -4,47 +4,45 @@ import ru.vsu.cs.ilyam.result.PartitionResult;
 import ru.vsu.cs.ilyam.result.SwapAndCompareCountResult;
 
 public class QuickSort {
+    private int countComparison = 0;
+    private int swapCount = 0;
 
-    public SwapAndCompareCountResult sort(int[] arr, int begin, int end) {
-        int swapCount = 0;
-        int comparisonCount = 0;
-        PartitionResult partitionResult = null;
+    public int[] sort(int[] arr, int begin, int end) {
         if (begin < end) {
-            partitionResult = partition(arr, begin, end);
-            int partitionIndex = partitionResult.getPartitionIndex();
-            swapCount += partitionResult.getCountSwap();
-            comparisonCount += partitionResult.getCountComparison();
+            int partitionIndex = partition(arr, begin, end);
 
             sort(arr, begin, partitionIndex - 1);
             sort(arr, partitionIndex + 1, end);
         }
-        return new SwapAndCompareCountResult(arr, swapCount, comparisonCount);
+        return arr;
     }
 
-    private PartitionResult partition(int arr[], int begin, int end) {
+    private int partition(int arr[], int begin, int end) {
         int pivot = arr[end];
         int i = (begin - 1);
 
-        int swapCount = 0;
-        int comparisonCount = 0;
-
         for (int j = begin; j < end; j++) {
-            comparisonCount++;
+            this.countComparison++;
             if (arr[j] <= pivot) {
                 i++;
-
-                swapCount++;
+                this.swapCount++;
                 int swapTemp = arr[i];
                 arr[i] = arr[j];
                 arr[j] = swapTemp;
             }
         }
-
-        swapCount++;
         int swapTemp = arr[i + 1];
         arr[i + 1] = arr[end];
         arr[end] = swapTemp;
 
-        return new PartitionResult(i + 1, swapCount, comparisonCount);
+        return i + 1;
+    }
+
+    public int getCountComparison() {
+        return countComparison;
+    }
+
+    public int getSwapCount() {
+        return swapCount;
     }
 }

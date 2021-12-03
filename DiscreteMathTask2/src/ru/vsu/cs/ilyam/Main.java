@@ -121,18 +121,20 @@ public class Main {
     private static void printMergeSortResult(int[] arr, int size, MergeSort mergeSort) {
         System.out.println("\n");
         System.out.println("Отсортированный с помощью сортировки Слиянием массив : ");
-        printArray(mergeSort.sort(arr, size).getSortedArr());
-        System.out.println("Количество сравнений : " + mergeSort.sort(arr, size).getCountComparison());
-        System.out.println("Количество перестановок : " + mergeSort.sort(arr, size).getCountSwap());
+        //printArray(mergeSort.sort(arr, size));
+        System.out.println(Arrays.toString(mergeSort.sort(arr,size)));
+        System.out.println("Количество сравнений : " + mergeSort.getCountComparison());
+        System.out.println("Количество перестановок : " + mergeSort.getSwapCount());
         System.out.println("\n");
     }
 
     private static void printQuickSortResult(int[] arr, int begin, int end, QuickSort quickSort) {
         System.out.println("\n");
         System.out.println("Отсортированный с помощью Быстрой сортировки массив : ");
-        printArray(quickSort.sort(arr, begin, end).getSortedArr());
-        System.out.println("Количество сравнений : " + quickSort.sort(arr, begin, end).getCountComparison());
-        System.out.println("Количество перестановок : " + quickSort.sort(arr, begin, end).getCountSwap());
+        System.out.println(Arrays.toString(quickSort.sort(arr,begin, end)));
+
+        System.out.println("Количество сравнений : " + quickSort.getCountComparison());
+        System.out.println("Количество перестановок : " + quickSort.getSwapCount());
         System.out.println("\n");
     }
 }
